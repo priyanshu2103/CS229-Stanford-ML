@@ -20,12 +20,18 @@ idx = zeros(size(X,1), 1);
 %
 % Note: You can use a for-loop over the examples to compute this.
 %
-
-
-
-
-
-
+m=size(X,1);
+for i = 1:m
+  min=inf;
+  for j=1:K
+    diff=X(i,:)-centroids(j,:);
+    d=diff*diff';
+    if(d<min)
+      min=d;
+      idx(i)=j;
+    end
+  end
+end
 
 % =============================================================
 

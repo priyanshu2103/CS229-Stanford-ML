@@ -25,14 +25,14 @@ for epsilon = min(pval):stepsize:max(pval)
 
 
 
+    true_positive  = sum((yval==1) & (pval<epsilon));
+    false_positive = sum((yval==0) & (pval<epsilon));
+    false_negative = sum((yval==1) & (pval>=epsilon));
 
+    precision = true_positive/(true_positive + false_positive);
+    recall    = true_positive/(true_positive + false_negative);
 
-
-
-
-
-
-
+    F1 = (2*precision*recall)/(precision+recall);
 
 
     % =============================================================

@@ -41,19 +41,29 @@ Theta_grad = zeros(size(Theta));
 %
 
 
+diff=X*Theta'-Y;
+J=sum((diff.^2)(R==1))/2;
+kemp=Theta .^ 2;
+kemp2=X .^ 2;
+sump2=sum(sum(kemp2));
+sump=sum(sum(kemp));
+J=J+(lambda/2)*sump+(lambda/2)*sump2;
 
+for i=1:num_movies
+  idx = find(R(i, :)==1);    % users that have rated movie i.
+  Theta_tmp = Theta(idx, :); % user features of movie i.
+  Y_tmp = Y(i, idx);         % user's ratings of movie i.
+  X_grad(i, :) = (X(i, :)*Theta_tmp' - Y_tmp)*Theta_tmp;
+  X_grad(i, :) = X_grad(i, :)+lambda*X(i, :); % regularized term of x.
+end
 
-
-
-
-
-
-
-
-
-
-
-
+for j=1:num_users
+  idx = find(R(:, j)==1)'; % movies that have rated by user j.
+  X_tmp = X(idx, :);       % features of movies rated by user j.
+  Y_tmp = Y(idx, j);       % user ratings by user j.
+  Theta_grad(j, :) = (X_tmp*Theta(j, :)'-Y_tmp)'*X_tmp;
+  Theta_grad(j, :) = Theta_grad(j, :)+lambda*Theta(j, :); % regularized term of theta.
+end
 
 % =============================================================
 

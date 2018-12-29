@@ -9,7 +9,6 @@ function [mu sigma2] = estimateGaussian(X)
 
 % Useful variables
 [m, n] = size(X);
-
 % You should return these values correctly
 mu = zeros(n, 1);
 sigma2 = zeros(n, 1);
@@ -21,8 +20,20 @@ sigma2 = zeros(n, 1);
 %               should contain variance of the i-th feature.
 %
 
-
-
+for i = 1:n
+  sum=0;
+  for j = 1:m
+    sum=sum+X(j,i);
+  end
+  mu(i)=sum/m;
+end
+for i =1:n
+  sum=0;
+  for j =1:m
+    sum=sum+(X(j,i)-mu(i)) .^ 2;
+  end
+  sigma2(i)=sum/m;
+end
 
 
 
